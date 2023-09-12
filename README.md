@@ -47,7 +47,7 @@ on (see the [Tiles](#Tiles) section).
 - **Close View**: is the view range in which even hidden units can be spotted in tiles.
 - **Armor**: is the armor value of a unit.
 - **Fire Range**: is the fire range in tiles.
-- **Ammo**: is the maximum ammo that the unit can carry. Monition is slowly replenished through supply deports.
+- **Ammo**: is the maximum ammo that the unit can carry. Ammunition is slowly replenished through supply deports.
 - **Speed**: is the movement speed with which you can switch to an adjacent tile. the first half of the time the unit is
   at the start tile. the second half of the time, the unit is already at the target tile, but not yet ready for other
   actions.
