@@ -7,9 +7,9 @@ package gui
 */
 
 import (
-	"TankWars2/core"
-	"TankWars2/gui/resources"
 	"fmt"
+	"github.com/SchnorcherSepp/TankWars2/core"
+	"github.com/SchnorcherSepp/TankWars2/gui/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/vector"

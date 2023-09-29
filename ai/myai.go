@@ -1,8 +1,8 @@
 package ai
 
 import (
-	"TankWars2/core"
-	"TankWars2/remote"
+	"github.com/SchnorcherSepp/TankWars2/core"
+	"github.com/SchnorcherSepp/TankWars2/remote"
 	"math/rand"
 	"time"
 )

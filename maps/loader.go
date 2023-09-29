@@ -1,8 +1,8 @@
 package maps
 
 import (
-	"TankWars2/core"
 	"encoding/json"
+	"github.com/SchnorcherSepp/TankWars2/core"
 	"os"
 )
 

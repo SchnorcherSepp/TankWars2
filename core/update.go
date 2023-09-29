@@ -12,7 +12,7 @@ package core
 */
 
 import (
-	"TankWars2/gui/resources"
+	"github.com/SchnorcherSepp/TankWars2/gui/resources"
 )
 
 //--------  Setter  --------------------------------------------------------------------------------------------------//

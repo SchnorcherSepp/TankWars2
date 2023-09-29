@@ -1,14 +1,14 @@
 package main
 
 import (
-	"TankWars2/ai"
-	"TankWars2/core"
-	"TankWars2/gui"
-	"TankWars2/gui/resources"
-	"TankWars2/maps"
-	"TankWars2/remote"
 	"flag"
 	"fmt"
+	"github.com/SchnorcherSepp/TankWars2/ai"
+	"github.com/SchnorcherSepp/TankWars2/core"
+	"github.com/SchnorcherSepp/TankWars2/gui"
+	"github.com/SchnorcherSepp/TankWars2/gui/resources"
+	"github.com/SchnorcherSepp/TankWars2/maps"
+	"github.com/SchnorcherSepp/TankWars2/remote"
 	"os"
 	"time"
 )

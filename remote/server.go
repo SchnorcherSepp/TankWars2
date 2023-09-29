@@ -5,9 +5,9 @@ package remote
 */
 
 import (
-	"TankWars2/core"
 	"bufio"
 	"fmt"
+	"github.com/SchnorcherSepp/TankWars2/core"
 	"log"
 	"net"
 	"net/textproto"

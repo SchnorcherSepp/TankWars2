@@ -5,10 +5,10 @@ package remote
 */
 
 import (
-	"TankWars2/core"
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"github.com/SchnorcherSepp/TankWars2/core"
 	"net"
 	"net/textproto"
 	"strconv"

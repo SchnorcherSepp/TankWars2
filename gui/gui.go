@@ -6,10 +6,10 @@ package gui
 */
 
 import (
-	"TankWars2/core"
-	"TankWars2/gui/resources"
-	"TankWars2/remote"
 	"fmt"
+	"github.com/SchnorcherSepp/TankWars2/core"
+	"github.com/SchnorcherSepp/TankWars2/gui/resources"
+	"github.com/SchnorcherSepp/TankWars2/remote"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"image"
