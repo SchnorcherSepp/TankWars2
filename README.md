@@ -145,9 +145,10 @@ demoralized attacker against different target armor levels.
 
 The following maps are implemented.
 
-| 1v1: Border Dispute (15x08)               | 1v1: River Island (21x13)               |
-|-------------------------------------------|-----------------------------------------|
-| ![BASE](maps/1v1_borderdispute_15x08.png) | ![BASE](maps/1v1_riverisland_21x13.png) |
+| 1v1: Border Dispute (15x08)                                                                                           | 1v1: River Island (21x13)                                                                                                                                 |
+|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![BASE](maps/1v1_borderdispute_15x08.png)                                                                             | ![BASE](maps/1v1_riverisland_21x13.png)                                                                                                                   |
+| **Reinforcement during iteration:**<br/> 1200: Soldier,<br/>1800: Tank,<br/>3500: Soldier + Artillery,<br/>5000: Tank | **Reinforcement during iteration:**<br/> 1300: 2xSoldier + Artillery,<br/>3500: 2xTank + Artillery,<br/>7000: Soldier + 2xArtillery,<br/>13000: 5xSoldier |
 
 ## Formal game rules
 
@@ -219,22 +220,26 @@ Each iteration corresponds to a call to _Update()_. There are 30 iterations per 
       including potential damage to the target tile or unit. An attack always hits the
       terrain itself and all units on the tile.
 
-5) **Update unit attributes and ammunition**
+5) **Spawn reinforcement for players with a base**
+    - Reinforcements are defined at certain time intervals in the map configuration (see Reinforcement).
+    - As long as a player has a free space with supplies, he can receive reinforcements.
+
+6) **Update unit attributes and ammunition**
     - updates the attributes of all units on the game map based on
       their type, tile, and supply. It calculates and assigns values such as view
       range, armor, firing range, speed, ammunition, and hidden status for each unit.
 
-6) **Heal units in bases**
+7) **Heal units in bases**
     - Units located at bases are healed incrementally, and their demoralized status is fixed.
 
-7) **Update visibility ranges for units**
+8) **Update visibility ranges for units**
     - updates the visibility of units on the game map based on their attributes (hidden or not).
     - It clears and then recalculates the visibility map for each player's units, taking into
       account the unit's viewing range and other factors.
     - The tiles can have exactly three states for the player: FogOfWar, NormalView and CloseView.
       This is determined by the visibility of the units (attributes view and closeView).
 
-8) **Advance the iteration count**
+9) **Advance the iteration count**
     - finish the current round and increase the iteration counter
 
 ### Command: MOVE
@@ -301,7 +306,6 @@ How long the command takes depends on the _FireSpeed_ attribute of the unit.
 
 ## Network protocol specification
 
-
 ### General conventions
 
 1) The client sends a command to the server as a single line of text.
@@ -349,11 +353,12 @@ GameStatus returns a json with all world data.
 ```
 // World represents the game world with its tiles and dimensions.
 type World struct {
-   Tiles     [][]*Tile  // Two-dimensional slice of tile pointers representing the world's tiles.
-   XWidth    int        // The width of the world in tiles.
-   YHeight   int        // The height of the world in tiles.
-   Iteration uint64     // Current iteration (game time) of the world.
-   Freeze    bool       // if true, the update function has no effect and the world remains frozen
+   Tiles         [][]*Tile       // Two-dimensional slice of tile pointers representing the world's tiles.
+   XWidth        int             // The width of the world in tiles.
+   YHeight       int             // The height of the world in tiles.
+   Reinforcement map[uint64]byte // reinforcement for all players with a base. key is iteration, value is unit type.
+   Iteration     uint64          // Current iteration (game time) of the world.
+   Freeze        bool            // if true, the update function has no effect and the world remains frozen
 }
 
 // Tile represents a single hexagonal tile within the game world grid.
@@ -418,6 +423,10 @@ see [MOVE](#command-move)
   "YHeight": 8,
   "Iteration": 477,
   "Freeze": false,
+  "Reinforcement": {
+    "800": 85,
+    "1300": 84
+  },
   "Tiles": [
     [
       {

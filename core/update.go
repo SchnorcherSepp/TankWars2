@@ -27,6 +27,7 @@ import (
 // - Sets the owner of bases on the map based on unit presence and proximity.
 // - Updates the supply levels on the map, considering changes in base ownership.
 // - Processes movement and firing commands of units.
+// - Spawn reinforcement for players with a base.
 // - Updates unit statistics and attributes, including ammunition and health.
 // - Heals units stationed at bases over time and fixes demoralization status.
 // - Updates visibility ranges for units on the map.
@@ -50,7 +51,7 @@ func (w *World) Update() {
 	processMove(w)
 	processFire(w)
 
-	// spawn reinforcements for surviving players
+	// spawn reinforcement for players with a base
 	spawnReinforcements(w)
 
 	// Update unit attributes and ammunition
