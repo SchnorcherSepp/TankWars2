@@ -12,7 +12,10 @@ package core
 */
 
 import (
+	"bytes"
 	"github.com/SchnorcherSepp/TankWars2/gui/resources"
+	"math/rand"
+	"sort"
 )
 
 //--------  Setter  --------------------------------------------------------------------------------------------------//
@@ -46,6 +49,9 @@ func (w *World) Update() {
 	// process commands
 	processMove(w)
 	processFire(w)
+
+	// spawn reinforcements for surviving players
+	spawnReinforcements(w)
 
 	// Update unit attributes and ammunition
 	updateUnitAttributes(w)
@@ -310,6 +316,66 @@ func processMove(world *World) {
 			// MOVE UNIT
 			to.Unit = from.Unit // move unit
 			from.Unit = nil     // Clear source tile
+		}
+	}
+}
+
+func spawnReinforcements(world *World) {
+	if world == nil || world.Reinforcement == nil || len(world.Reinforcement) == 0 {
+		return // reinforcement map is empty
+	}
+
+	// get reinforcement unit type
+	unitType, ok := world.Reinforcement[world.Iteration]
+	if !ok || unitType == 0 || !bytes.Contains(UNITS, []byte{unitType}) {
+		return // no reinforcement in this iteration
+	}
+
+	// Create a map to store players with supply.
+	player := make(map[uint8][]*Tile)
+
+	// Iterate through the tiles in the game world.
+	for _, tile := range world.TileList(0) {
+		// Check if the tile exists and has a supply of some kind.
+		if tile != nil && tile.Supply != nil && len(tile.Supply) > 0 {
+			// Check if tile is free
+			if tile.Unit == nil && (tile.Type == DIRT || tile.Type == GRASS || tile.Type == FOREST || tile.Type == BASE || tile.Type == HOLE || tile.Type == HILL) {
+				// Iterate through players and their supplies on the tile.
+				for ply, spl := range tile.Supply {
+					// Check if the supply is greater than 0 and less than 9.
+					if spl > 0 && spl < 9 {
+						// Get the list of tiles for the current player.
+						list, ok := player[ply]
+						if !ok {
+							list = make([]*Tile, 0, 5) // create an empty slice.
+						}
+						// Add the current tile to the player's list.
+						list = append(list, tile)
+						// Update the player's list in the map.
+						player[ply] = list
+					}
+				}
+			}
+		}
+	}
+
+	// sort lists
+	for ply, tiles := range player {
+		// shuffle tiles
+		rand.Shuffle(len(tiles), func(i, j int) { tiles[i], tiles[j] = tiles[j], tiles[i] })
+		// sort tiles by supply
+		sort.Slice(tiles, func(i, j int) bool {
+			return tiles[i].Supply[ply] < tiles[j].Supply[ply]
+		})
+	}
+
+	// spawn new unit
+	for ply, tiles := range player {
+		for _, tile := range tiles {
+			if tile.Unit == nil {
+				tile.Unit = NewUnit(ply, unitType)
+				break
+			}
 		}
 	}
 }

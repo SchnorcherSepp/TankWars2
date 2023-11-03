@@ -26,6 +26,7 @@ func Loader(path string) (*core.World, error) {
 
 	// Create a new world based on the loaded dimensions
 	world := core.NewWorld(load.XWidth, load.YHeight)
+	world.Reinforcement = load.Reinforcement
 
 	// Read and populate relevant attributes for each tile in the loaded world
 	for x := range load.Tiles {

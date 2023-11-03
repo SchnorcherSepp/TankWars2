@@ -23,9 +23,10 @@ import (
 type World struct {
 	lock sync.Mutex // Mutex for synchronization of concurrent access to the world.
 
-	Tiles   [][]*Tile // Two-dimensional slice of tile pointers representing the world's tiles.
-	XWidth  int       // The width of the world in tiles.
-	YHeight int       // The height of the world in tiles.
+	Tiles         [][]*Tile       // Two-dimensional slice of tile pointers representing the world's tiles.
+	XWidth        int             // The width of the world in tiles.
+	YHeight       int             // The height of the world in tiles.
+	Reinforcement map[uint64]byte // reinforcement for all players with a base. key is iteration, value is unit type.
 
 	Iteration uint64 // Current iteration (game time) of the world.
 	Freeze    bool   // if true, the update function has no effect and the world remains frozen

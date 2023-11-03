@@ -1564,5 +1564,12 @@
   "XWidth": 15,
   "YHeight": 8,
   "Iteration": 0,
-  "Freeze": false
+  "Freeze": false,
+  "Reinforcement": {
+    "1200": 85,
+    "1800": 84,
+    "3501": 85,
+    "3502": 65,
+    "5000": 84
+  }
 }
