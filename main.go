@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-const VERSION = "2.1"
+const VERSION = "2.2"
 
 func main() {
 	parseMode() // cli
